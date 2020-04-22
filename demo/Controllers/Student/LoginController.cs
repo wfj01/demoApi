@@ -28,8 +28,6 @@ namespace demo.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("getUser")]
-        [HttpGet]
-        [Route("Login")]
         public JsonResult Login([FromQuery]Login login)
         {
             try

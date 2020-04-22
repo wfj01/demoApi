@@ -10,22 +10,25 @@ namespace demo.Models.DemoEntities
     public class Secondroom
     {
         /// <summary>
-        /// Id
+        /// id
         /// </summary>
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// 菜名
         /// </summary>
         public string Dishname { get; set; }
-
         /// <summary>
         /// 价格
         /// </summary>
         public string Price { get; set; }
+        /// <summary>
+        /// 得分
+        /// </summary>
+        public string Score { get; set; }
 
         /// <summary>
-        /// 加工时间
+        /// 时间
         /// </summary>
         public string Time { get; set; }
 
@@ -40,8 +43,13 @@ namespace demo.Models.DemoEntities
         public string Windows { get; set; }
 
         /// <summary>
-        /// 备份
+        /// 备注
         /// </summary>
         public string Remarks { get; set; }
+
+        /// <summary>
+        /// 数量
+        /// </summary>
+        public string Number { get; set; }
     }
 }
