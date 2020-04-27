@@ -212,11 +212,11 @@ namespace demo.Api.Controllers
         /// 向订单表中添加数据
         /// </summary>
         /// <param name="firstrooms"></param>
-        /// <param name="users"></param>
+        /// <param name="studentid"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("postUser")]
-        public JsonResult PostUser([FromBody]List<Firstroom> firstrooms)
+        public JsonResult PostUser([FromBody]List<Firstroom> firstrooms,string studentid)
         {
             try
             {
@@ -226,7 +226,7 @@ namespace demo.Api.Controllers
                 sqlConnection.Open();
                 foreach (var item in firstrooms)
                 {
-                    string sql = "INSERT INTO [demo].[dbo].[order] VALUES('" + item.Dishname + "','" + item.Price + "','" + item.Score + "','" + item.Time + "','" + item.Practice + "','" + item.Windows + "','" + item.Remarks + "','" + item.Number + "') ";
+                    string sql = "INSERT INTO [demo].[dbo].[order] VALUES('"+studentid+"','" + item.Dishname + "','" + item.Price + "','" + item.Score + "','" + item.Time + "','" + item.Practice + "','" + item.Windows + "','" + item.Remarks + "','" + item.Number + "') ";
                     DataSet dataSet = new DataSet();
                     SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                     sqlDataAdapter.Fill(dataSet);

@@ -21,14 +21,14 @@ namespace demo.Api.Controllers.Student
         /// <returns></returns>
         [HttpGet]
         [Route("queryUser")]
-        public JsonResult QueryUser()
+        public JsonResult QueryUser(string studentid)
         {
             try
             {
                 SqlConnection sqlConnection =
                  new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
                 sqlConnection.Open();
-                string sql = "SELECT * FROM [demo].[dbo].[order]";
+                string sql = "SELECT * FROM [demo].[dbo].[order] where studentid='"+studentid+"'";
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 DataSet dataSet = new DataSet();
                 sqlDataAdapter.Fill(dataSet);
