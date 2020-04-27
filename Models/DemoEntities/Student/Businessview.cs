@@ -4,7 +4,7 @@ using System.Text;
 
 namespace demo.Models.DemoEntities.Student
 {
-    public class Business
+    public class Businessview
     {
         public string id { get; set; }
 

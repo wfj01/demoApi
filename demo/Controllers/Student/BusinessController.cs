@@ -30,22 +30,22 @@ namespace demo.Api.Controllers.Student
                 sqlDataAdapter.Fill(dataSet);
                 if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
                 {
-                    return ApiResultBuilder<List<Business>>.Return(dataSet);
+                    return ApiResultBuilder<List<Businessview>>.Return(dataSet);
                 }
                 else
                 {
-                    return ApiResultBuilder<Business>.Return(-1, "查无数据");
+                    return ApiResultBuilder<Businessview>.Return(-1, "查无数据");
                 }
             }
             catch (Exception e)
             {
-                return ApiResultBuilder<Business>.Return(-2, "数据异常" + e.Message);
+                return ApiResultBuilder<Businessview>.Return(-2, "数据异常" + e.Message);
             }
         }
 
         [HttpPost]
         [Route("adddate")]
-        public JsonResult Adddate([FromBody] Business business)
+        public JsonResult Adddate([FromBody] Businessview business)
         {
             try
             {
@@ -57,12 +57,12 @@ namespace demo.Api.Controllers.Student
                 DataSet dataSet = new DataSet();
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 sqlDataAdapter.Fill(dataSet);
-                return ApiResultBuilder<Business>.Return(0, "插入成功");
+                return ApiResultBuilder<Businessview>.Return(0, "插入成功");
 
             }
             catch (Exception e)
             {
-                return ApiResultBuilder<Business>.Return(-2, "数据异常" + e.Message);
+                return ApiResultBuilder<Businessview>.Return(-2, "数据异常" + e.Message);
             }
         }
         /// <summary>
@@ -72,7 +72,7 @@ namespace demo.Api.Controllers.Student
         /// <returns></returns>
         [HttpPost]
         [Route("updatedate")]
-        public JsonResult UpdateDate([FromBody] Business business)
+        public JsonResult UpdateDate([FromBody] Businessview business)
         {
             try
             {
@@ -88,11 +88,11 @@ namespace demo.Api.Controllers.Student
                 DataSet dataSet = new DataSet();
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 sqlDataAdapter.Fill(dataSet);
-                return ApiResultBuilder<Business>.Return(0, "更新成功");
+                return ApiResultBuilder<Businessview>.Return(0, "更新成功");
             }
             catch (Exception e)
             {
-                return ApiResultBuilder<Business>.Return(-2, "数据异常" + e.Message);
+                return ApiResultBuilder<Businessview>.Return(-2, "数据异常" + e.Message);
             }
         }
 
@@ -118,17 +118,17 @@ namespace demo.Api.Controllers.Student
                 sqlDataAdapter1.Fill(dataSet1);
                 if ((dataSet1 != null && dataSet1.Tables.Count > 0 && dataSet1.Tables[0].Rows.Count > 0) == false)
                 {
-                    return ApiResultBuilder<Business>.Return(-1, "id不存在");
+                    return ApiResultBuilder<Businessview>.Return(-1, "id不存在");
                 }
                 string sql = "DELETE FROM [demo].[dbo].[shopping] WHERE id=" + id;
                 DataSet dataSet = new DataSet();
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 sqlDataAdapter.Fill(dataSet);
-                return ApiResultBuilder<Business>.Return(0, "删除成功");
+                return ApiResultBuilder<Businessview>.Return(0, "删除成功");
             }
             catch (Exception e)
             {
-                return ApiResultBuilder<Business>.Return(-2, "数据异常" + e.Message);
+                return ApiResultBuilder<Businessview>.Return(-2, "数据异常" + e.Message);
             }
         }
     }

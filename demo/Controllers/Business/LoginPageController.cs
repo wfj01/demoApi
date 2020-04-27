@@ -5,64 +5,70 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using demo.Models.Common;
-using demo.Models.DemoEntities;
+using demo.Models.DemoEntities.Business;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
-namespace demo.Api.Controllers
+namespace demo.Api.Controllers.Business
 {
-
-    /// <summary>
-    /// 登录验证接口
-    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class LoginController : ControllerBase
+    public class LoginPageController : ControllerBase
     {
-
         /// <summary>
         /// 登录接口
         /// </summary>
-        /// <param name="login"></param>
+        /// <param name="businessLogin"></param>
         /// <returns></returns>
         [HttpGet]
         [Route("getUser")]
-        public JsonResult Login([FromQuery]Login login)
+        public JsonResult Login([FromQuery]BusinessLogin businessLogin)
         {
             try
             {
                 SqlConnection sqlConnection =
                      new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
                 sqlConnection.Open();
-                string sql1 = "SELECT * FROM [demo].[dbo].[Student] where studentid='" + login.Studentid+"'";
+                string sql1 = "SELECT * FROM [demo].[dbo].[businessMessage] where name='" + businessLogin.Name + "'";
                 SqlDataAdapter sqlDataAdapter1 = new SqlDataAdapter(sql1, sqlConnection);
                 DataSet dataSet1 = new DataSet();
                 sqlDataAdapter1.Fill(dataSet1);
-                string sql2 = "SELECT * FROM [demo].[dbo].[Student] where password='" + login.Password + "'";
+                string sql2 = "SELECT * FROM [demo].[dbo].[businessMessage] where password='" + businessLogin.Password + "'";
                 SqlDataAdapter sqlDataAdapter2 = new SqlDataAdapter(sql2, sqlConnection);
                 DataSet dataSet2 = new DataSet();
                 sqlDataAdapter2.Fill(dataSet2);
-                if ((dataSet1 != null && dataSet1.Tables.Count > 0 && dataSet1.Tables[0].Rows.Count > 0) &&
+                string sql3= "SELECT name FROM [demo].[dbo].[licenseCode] Where code='" + businessLogin.License+"'";
+                SqlDataAdapter sqlDataAdapter3 = new SqlDataAdapter(sql3, sqlConnection);
+                DataSet dataSet3= new DataSet();
+                sqlDataAdapter3.Fill(dataSet3);
+                if ((dataSet3 != null && dataSet3.Tables.Count > 0 && dataSet3.Tables[0].Rows.Count > 0))
+                {
+                    if ((dataSet1 != null && dataSet1.Tables.Count > 0 && dataSet1.Tables[0].Rows.Count > 0) &&
                     (dataSet2 != null && dataSet2.Tables.Count > 0 && dataSet2.Tables[0].Rows.Count > 0))
                 {
-                    return ApiResultBuilder<List<Login>>.Return(0, "登录成功");
+                    return new JsonResult("查询成功");
                 }
                 else
                 {
                     if ((dataSet1 != null && dataSet1.Tables.Count > 0 && dataSet1.Tables[0].Rows.Count > 0) == false)
                     {
-                        return ApiResultBuilder<List<Login>>.Return(-1, "账号不正确");
+                        return ApiResultBuilder<List<BusinessLogin>>.Return(-1, "Id不正确");
                     }
                     else
                     {
-                        return ApiResultBuilder<List<Login>>.Return(-1, "密码不正确");
+                        return ApiResultBuilder<List<BusinessLogin>>.Return(-1, "密码不正确");
                     }
                 }
+                }
+                else
+                {
+                    return ApiResultBuilder<List<BusinessLogin>>.Return(-1, "授权码不正确");
+                }
+
             }
             catch (Exception e)
             {
-                return ApiResultBuilder<Login>.Return(-2, "数据异常" + e.Message);
+                return ApiResultBuilder<BusinessLogin>.Return(-2, "数据异常" + e.Message);
             }
         }
     }
