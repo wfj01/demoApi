@@ -15,12 +15,14 @@ using demo.Models.Common;
 namespace demo.Api.Controllers
 {
     /// <summary>
-    /// 第一餐厅-控制器
+    /// 第一餐厅控制器
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class FirstroomController : ControllerBase
     {
+
+        #region 第一餐厅-加载表格数据
         /// <summary>
         /// 第一餐厅-加载表格数据
         /// </summary>
@@ -52,9 +54,11 @@ namespace demo.Api.Controllers
                 return ApiResultBuilder<Firstroom>.Return(-2, "数据异常" + e.Message);
             }
         }
+        #endregion
 
+        #region 第一餐厅-查询数据
         /// <summary>
-        /// 查询数据
+        /// 第一餐厅-查询数据
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -207,9 +211,11 @@ namespace demo.Api.Controllers
                 return ApiResultBuilder<Firstroom>.Return(-2, "数据异常" + e.Message);
             }
         }
+        #endregion
 
+        #region 第一餐厅-加入购物车
         /// <summary>
-        /// 向订单表中添加数据
+        /// 第一餐厅-向订单表中添加数据
         /// </summary>
         /// <param name="firstrooms"></param>
         /// <param name="studentid"></param>
@@ -238,5 +244,6 @@ namespace demo.Api.Controllers
                 return ApiResultBuilder<Firstroom>.Return(-2, "数据异常" + e.Message);
             }
         }
+        #endregion
     }
 }
