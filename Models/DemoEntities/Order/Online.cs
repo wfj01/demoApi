@@ -16,5 +16,7 @@ namespace demo.Models
         public string StudentPhone { get; set; }
         public bool IsConfirm { get; set; } = false;
         public bool IsComplete { get; set; } = false;
+
+        public string UpdateTime { get; set; } = DateTime.Now.ToString();
     }
 }

@@ -20,7 +20,7 @@ namespace demo.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("queryUser")]
+        [Route("unOrderqueryUser")]
         public JsonResult QueryUser()
         {
             try
@@ -28,7 +28,7 @@ namespace demo.Api.Controllers
                 SqlConnection sqlConnection =
                  new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
                 sqlConnection.Open();
-                string sql = "SELECT * FROM [demo].[dbo].[Online] where isConfirm='false' and i";
+                string sql = "SELECT * FROM [demo].[dbo].[Online] where isConfirm='false' and isComplete='false'";
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 DataSet dataSet = new DataSet();
                 sqlDataAdapter.Fill(dataSet);
@@ -52,15 +52,15 @@ namespace demo.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("queryUsera")]
-        public JsonResult QueryUsera()
+        [Route("confirmedOrder")]
+        public JsonResult ConfirmedOrder()
         {
             try
             {
                 SqlConnection sqlConnection =
                  new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
                 sqlConnection.Open();
-                string sql = "SELECT * FROM [demo].[dbo].[Online] where isComplete='true'";
+                string sql = "SELECT * FROM [demo].[dbo].[Online] where isConfirm='true' and isComplete='false'";
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 DataSet dataSet = new DataSet();
                 sqlDataAdapter.Fill(dataSet);
@@ -84,15 +84,15 @@ namespace demo.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("queryUserb")]
-        public JsonResult QueryUserb()
+        [Route("completedOrder")]
+        public JsonResult CompletedOrder()
         {
             try
             {
                 SqlConnection sqlConnection =
                  new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
                 sqlConnection.Open();
-                string sql = "SELECT * FROM [demo].[dbo].[Online] where isComplete='true'";
+                string sql = "SELECT * FROM [demo].[dbo].[Online] where isConfirm='true' and isComplete='true'";
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 DataSet dataSet = new DataSet();
                 sqlDataAdapter.Fill(dataSet);
@@ -113,17 +113,20 @@ namespace demo.Api.Controllers
 
         [HttpGet]
         [Route("confirmorder")]
-        public JsonResult Confirmorder(string id)
+        public JsonResult Confirmorder([FromQuery] Online online,string id)
         {
+
+
             try
             {
                 SqlConnection sqlConnection =
                 new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
                 sqlConnection.Open();
-                string sql = "UPDATE [demo].[dbo].[Online] set isConfirm='" + true + "'where id='" + id + "'";
+                string sql = "UPDATE [demo].[dbo].[Online] set isConfirm='" + true + "',updatetime='"+online.UpdateTime+"'where id='" + id + "'";
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 DataSet dataSet = new DataSet();
                 sqlDataAdapter.Fill(dataSet);
+
                 return ApiResultBuilder<Online>.Return(0, "确认订单成功");
             }
             catch (Exception e)
@@ -134,14 +137,14 @@ namespace demo.Api.Controllers
 
         [HttpGet]
         [Route("completemorder")]
-        public JsonResult Completemorder(string id)
+        public JsonResult Completemorder([FromQuery] Online online, string id)
         {
             try
             {
                 SqlConnection sqlConnection =
                 new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
                 sqlConnection.Open();
-                string sql = "UPDATE [demo].[dbo].[Online] set isComplete='" + true + "'where id='" + id + "'";
+                string sql = "UPDATE [demo].[dbo].[Online] set isComplete='" + true + "',updatetime='" + online.UpdateTime + "'where id='" + id + "'";
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 DataSet dataSet = new DataSet();
                 sqlDataAdapter.Fill(dataSet);
