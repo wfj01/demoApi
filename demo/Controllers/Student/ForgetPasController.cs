@@ -43,7 +43,7 @@ namespace demo.Api.Controllers
                 sqlDataAdapter1.Fill(dataSet1);
                 if ((dataSet1 != null && dataSet1.Tables.Count > 0 && dataSet1.Tables[0].Rows.Count > 0) == false)
                 {
-                    return ApiResultBuilder<List<Login>>.Return(-1, "Id不存在");
+                    return ApiResultBuilder<List<Login>>.Return(-1, "账号不存在");
                 }
                 if ((dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0) &&
                     (dataSet1 != null && dataSet1.Tables.Count > 0 && dataSet1.Tables[0].Rows.Count > 0))
@@ -58,11 +58,11 @@ namespace demo.Api.Controllers
                 {
                     if ((dataSet1 != null && dataSet1.Tables.Count > 0 && dataSet1.Tables[0].Rows.Count > 0) == false)
                     {
-                        return ApiResultBuilder<Firstroom>.Return(-1, "学号错误");
+                        return ApiResultBuilder<Firstroom>.Return(-1, "账号错误");
                     }
                     else
                     {
-                        return ApiResultBuilder<Firstroom>.Return(-1, "学生姓名错误");
+                        return ApiResultBuilder<Firstroom>.Return(-1, "用户姓名错误");
                     }
                 }
                 

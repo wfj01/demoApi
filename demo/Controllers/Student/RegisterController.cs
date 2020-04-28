@@ -20,35 +20,34 @@ namespace demo.Api.Controllers
     public class RegisterController : ControllerBase
     {
 
-        [HttpGet]
-        [Route("queryUser")]
-        public string QueryUser()
-        {
-            try
-            {
-                SqlConnection sqlConnection =
-                 new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
-                sqlConnection.Open();
-                string sql = "SELECT * FROM [demo].[dbo].[Student]";
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
-                DataSet dataSet = new DataSet();
-                sqlDataAdapter.Fill(dataSet);
-                if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
-                {
+        //[HttpGet]
+        //[Route("queryUser")]
+        //public string QueryUser()
+        //{
+        //    try
+        //    {
+        //        SqlConnection sqlConnection =
+        //         new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
+        //        sqlConnection.Open();
+        //        string sql = "SELECT * FROM [demo].[dbo].[Student]";
+        //        SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
+        //        DataSet dataSet = new DataSet();
+        //        sqlDataAdapter.Fill(dataSet);
+        //        if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
+        //        {
+        //            return JsonConvert.SerializeObject(dataSet);
+        //        }
+        //        else
+        //        {
+        //            return ("查无数据");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ex.ToString();
+        //    }
 
-                    return JsonConvert.SerializeObject(dataSet);
-                }
-                else
-                {
-                    return ("查无数据");
-                }
-            }
-            catch (Exception ex)
-            {
-                return ex.ToString();
-            }
-
-        }
+        //}
 
         /// <summary>
         /// 向数据库中添加数据
@@ -71,7 +70,7 @@ namespace demo.Api.Controllers
                 sqlDataAdapter1.Fill(dataSet1);
                 if ((dataSet1 != null && dataSet1.Tables.Count > 0 && dataSet1.Tables[0].Rows.Count > 0) == true)
                 {
-                    return ApiResultBuilder<List<Login>>.Return(-1, "学号已存在");
+                    return ApiResultBuilder<List<Login>>.Return(-1, "账号已存在");
                 }
                 string sql = "INSERT INTO [demo].[dbo].[Student] VALUES('"+register.Id+"','" + register.Studentid + "','" + register.Studentname + "','" + register.Password + "','" + register.Telephone + "','" + register.Address + "','" + register.Email + "'," + register.Sex + ",'"+register.Birtherdate+"','"+register.Createtime+"','"+register.Updatetime+"') ";
                 DataSet dataSet = new DataSet();
