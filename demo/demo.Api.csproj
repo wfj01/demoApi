@@ -8,6 +8,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>bin\Debug\demo.Api.xml</DocumentationFile>
     <NoWarn>1701;1702;1591</NoWarn>
+    <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
