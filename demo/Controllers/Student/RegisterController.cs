@@ -70,7 +70,7 @@ namespace demo.Api.Controllers
                 sqlDataAdapter1.Fill(dataSet1);
                 if ((dataSet1 != null && dataSet1.Tables.Count > 0 && dataSet1.Tables[0].Rows.Count > 0) == true)
                 {
-                    return ApiResultBuilder<List<Login>>.Return(-1, "账号已存在");
+    return ApiResultBuilder<List<Login>>.Return(-1, "账号已存在");
                 }
                 string sql = "INSERT INTO [demo].[dbo].[Student] VALUES('"+register.Id+"','" + register.Studentid + "','" + register.Studentname + "','" + register.Password + "','" + register.Telephone + "','" + register.Address + "','" + register.Email + "'," + register.Sex + ",'"+register.Birtherdate+"','"+register.Createtime+"','"+register.Updatetime+"') ";
                 DataSet dataSet = new DataSet();

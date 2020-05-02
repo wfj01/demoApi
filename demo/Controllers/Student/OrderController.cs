@@ -16,7 +16,7 @@ namespace demo.Api.Controllers.Student
     public class OrderController : ControllerBase
     {
         /// <summary>
-        /// 订单表-加载表格数据
+        /// 购物车-加载表格数据
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -110,6 +110,24 @@ namespace demo.Api.Controllers.Student
             catch (Exception e)
             {
                 return ApiResultBuilder<Order>.Return(-2, "数据异常" + e.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("confirmorder")]
+        public JsonResult Confirmorder()
+        {
+            try
+            {
+                SqlConnection sqlConnection =
+                 new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
+                sqlConnection.Open();
+                string sql =""
+            }
+            catch ()
+            {
+
+                throw;
             }
         }
     }
