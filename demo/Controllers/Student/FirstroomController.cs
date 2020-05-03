@@ -232,7 +232,7 @@ namespace demo.Api.Controllers
                 sqlConnection.Open();
                 foreach (var item in firstrooms)
                 {
-                    string sql = "INSERT INTO [demo].[dbo].[order] VALUES('"+studentid+"','" + item.Dishname + "','" + item.Price + "','" + item.Score + "','" + item.Time + "','" + item.Practice + "','" + item.Windows + "','" + item.Remarks + "','" + item.Number + "') ";
+                    string sql = "INSERT INTO [demo].[dbo].[order](studentid,dishname,price,score,time,practice,windows,remarks,number,isSubmit,isConfirm,isComplete,isComplete,updatetime) VALUES('" + studentid+"','" + item.Dishname + "','" + item.Price + "','" + item.Score + "','" + item.Time + "','" + item.Practice + "','" + item.Windows + "','" + item.Remarks + "','" + item.Number + "','"+false+ "','" + false + "','" + false + "','"+ DateTime.Now.ToString()+ "') ";
                     DataSet dataSet = new DataSet();
                     SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                     sqlDataAdapter.Fill(dataSet);

@@ -208,7 +208,6 @@ namespace demo.Api.Controllers
         /// <summary>
         /// 向订单表中添加数据
         /// </summary>
-        /// <param name="users"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("secondrooms")]

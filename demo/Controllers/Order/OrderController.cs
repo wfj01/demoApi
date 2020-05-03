@@ -28,7 +28,7 @@ namespace demo.Api.Controllers.Student
                 SqlConnection sqlConnection =
                  new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
                 sqlConnection.Open();
-                string sql = "SELECT * FROM [demo].[dbo].[order] where studentid='"+studentid+"'";
+                string sql = "SELECT * FROM [demo].[dbo].[order] where studentid='" + studentid + "'and isSubmit= 'false'";
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 DataSet dataSet = new DataSet();
                 sqlDataAdapter.Fill(dataSet);
@@ -66,7 +66,7 @@ namespace demo.Api.Controllers.Student
                     "UPDATE [demo].[dbo].[order] SET dishname='" + orders.Dishname
                     + "',price='" + orders.Price + "',score='" + orders.Score
                     + "',time='" + orders.Time + "',windows='" + orders.Windows + "',remarks='" + orders.Remarks
-                    + "',number='" + orders.Number + "'where id="+orders.Id+"";
+                    + "',number='" + orders.Number + "'where id=" + orders.Id + "";
                 DataSet dataSet = new DataSet();
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 sqlDataAdapter.Fill(dataSet);
@@ -113,21 +113,36 @@ namespace demo.Api.Controllers.Student
             }
         }
 
+        /// <summary>
+        /// 提交订单
+        /// </summary>
+        /// <param name="orders"></param>
+        /// <param name="studentid"></param>
+        /// <param name="StudentName"></param>
+        /// <param name="StudentAddress"></param>
+        /// <param name="StudentPhone"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("confirmorder")]
-        public JsonResult Confirmorder()
+        public JsonResult Confirmorder([FromBody]List<Order> orders, string studentid,string StudentName,string StudentAddress,string StudentPhone)
         {
             try
             {
                 SqlConnection sqlConnection =
                  new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
                 sqlConnection.Open();
-                string sql =""
+                foreach (var item in orders)
+                {
+                    string sql = "INSERT INTO [demo].[dbo].[order] VALUES('" + studentid + "','" + StudentName + "','" + StudentAddress + "','" + StudentPhone + "','" + item.Dishname + "','" + item.Price + "','" + item.Score + "','" + item.Time + "','" + item.Practice + "','" + item.Windows + "','" + item.Remarks + "','" + item.Number + "','" + true + "','"+item.IsConfirm+"','"+item.IsComplete+"','"+item.UpdateTime+"') ";
+                    DataSet dataSet = new DataSet();
+                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
+                    sqlDataAdapter.Fill(dataSet);
+                }
+                return ApiResultBuilder<Order>.Return(0, "提交成功");
             }
-            catch ()
+            catch (Exception e)
             {
-
-                throw;
+                return ApiResultBuilder<Order>.Return(-2, "数据异常" + e.Message);
             }
         }
     }
