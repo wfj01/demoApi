@@ -34,11 +34,11 @@ namespace demo.Api.Controllers.Student
                 sqlDataAdapter.Fill(dataSet);
                 if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
                 {
-                    return ApiResultBuilder<List<Order>>.Return(dataSet);
+                    return ApiResultBuilder<List<Order>>.Return(0,"查询成功",dataSet);
                 }
                 else
                 {
-                    return new JsonResult("查无数据");
+                    return ApiResultBuilder<Order>.Return(-1, "查无数据",dataSet);
                 }
             }
             catch (Exception e)
@@ -117,14 +117,14 @@ namespace demo.Api.Controllers.Student
         /// 提交订单
         /// </summary>
         /// <param name="orders"></param>
-        /// <param name="studentid"></param>
+        /// <param name="Studentid"></param>
         /// <param name="StudentName"></param>
         /// <param name="StudentAddress"></param>
         /// <param name="StudentPhone"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("confirmorder")]
-        public JsonResult Confirmorder([FromBody]List<Order> orders, string studentid,string StudentName,string StudentAddress,string StudentPhone)
+        public JsonResult Confirmorder([FromBody]List<Order> orders,string Studentid,string StudentName,string StudentAddress,string StudentPhone)
         {
             try
             {
@@ -133,12 +133,41 @@ namespace demo.Api.Controllers.Student
                 sqlConnection.Open();
                 foreach (var item in orders)
                 {
-                    string sql = "INSERT INTO [demo].[dbo].[order] VALUES('" + studentid + "','" + StudentName + "','" + StudentAddress + "','" + StudentPhone + "','" + item.Dishname + "','" + item.Price + "','" + item.Score + "','" + item.Time + "','" + item.Practice + "','" + item.Windows + "','" + item.Remarks + "','" + item.Number + "','" + true + "','"+item.IsConfirm+"','"+item.IsComplete+"','"+item.UpdateTime+"') ";
+                    string sql = "UPDATE [demo].[dbo].[order] SET studentname='"+StudentName+"',studentaddress='"+StudentAddress+"',phone='"+StudentPhone+"',isSubmit='"+true+"',updatetime='"+ DateTime.Now.ToString() + "'where studentid='"+Studentid+"'";
                     DataSet dataSet = new DataSet();
                     SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                     sqlDataAdapter.Fill(dataSet);
                 }
+                QueryUser(Studentid);
                 return ApiResultBuilder<Order>.Return(0, "提交成功");
+            }
+            catch (Exception e)
+            {
+                return ApiResultBuilder<Order>.Return(-2, "数据异常" + e.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("ordermanage")]
+        public JsonResult Ordermanage(string studentid)
+        {
+            try
+            {
+                SqlConnection sqlConnection =
+                 new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
+                sqlConnection.Open();
+                string sql = "SELECT * FROM [demo].[dbo].[order] where studentid='" + studentid + "'and isSubmit= 'true'";
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
+                DataSet dataSet = new DataSet();
+                sqlDataAdapter.Fill(dataSet);
+                if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
+                {
+                    return ApiResultBuilder<List<Order>>.Return(0, "查询成功", dataSet);
+                }
+                else
+                {
+                    return ApiResultBuilder<Order>.Return(-1, "查无数据", dataSet);
+                }
             }
             catch (Exception e)
             {

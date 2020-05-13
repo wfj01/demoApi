@@ -28,7 +28,7 @@ namespace demo.Api.Controllers
                 SqlConnection sqlConnection =
                  new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
                 sqlConnection.Open();
-                string sql = "SELECT * FROM [demo].[dbo].[Online] where isConfirm='false' and isComplete='false'";
+                string sql = "SELECT * FROM [demo].[dbo].[Order] where isSubmit = 'true' and isConfirm='false' and isComplete='false'";
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 DataSet dataSet = new DataSet();
                 sqlDataAdapter.Fill(dataSet);
@@ -60,7 +60,7 @@ namespace demo.Api.Controllers
                 SqlConnection sqlConnection =
                  new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
                 sqlConnection.Open();
-                string sql = "SELECT * FROM [demo].[dbo].[Online] where isConfirm='true' and isComplete='false'";
+                string sql = "SELECT * FROM [demo].[dbo].[Order] where isConfirm='true' and isComplete='false'";
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 DataSet dataSet = new DataSet();
                 sqlDataAdapter.Fill(dataSet);
@@ -92,7 +92,7 @@ namespace demo.Api.Controllers
                 SqlConnection sqlConnection =
                  new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
                 sqlConnection.Open();
-                string sql = "SELECT * FROM [demo].[dbo].[Online] where isConfirm='true' and isComplete='true'";
+                string sql = "SELECT * FROM [demo].[dbo].[Order] where isConfirm='true' and isComplete='true'";
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 DataSet dataSet = new DataSet();
                 sqlDataAdapter.Fill(dataSet);
@@ -122,7 +122,7 @@ namespace demo.Api.Controllers
                 SqlConnection sqlConnection =
                 new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
                 sqlConnection.Open();
-                string sql = "UPDATE [demo].[dbo].[Online] set isConfirm='" + true + "',updatetime='"+online.UpdateTime+"'where id='" + id + "'";
+                string sql = "UPDATE [demo].[dbo].[Order] set isConfirm='" + true + "',updatetime='"+online.UpdateTime+"'where id='" + id + "'";
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 DataSet dataSet = new DataSet();
                 sqlDataAdapter.Fill(dataSet);
@@ -144,7 +144,7 @@ namespace demo.Api.Controllers
                 SqlConnection sqlConnection =
                 new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
                 sqlConnection.Open();
-                string sql = "UPDATE [demo].[dbo].[Online] set isComplete='" + true + "',updatetime='" + online.UpdateTime + "'where id='" + id + "'";
+                string sql = "UPDATE [demo].[dbo].[Order] set isComplete='" + true + "',updatetime='" + online.UpdateTime + "'where id='" + id + "'";
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 DataSet dataSet = new DataSet();
                 sqlDataAdapter.Fill(dataSet);

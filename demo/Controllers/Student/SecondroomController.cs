@@ -211,7 +211,7 @@ namespace demo.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("secondrooms")]
-        public JsonResult PostUser([FromBody]List<Secondroom> secondrooms)
+        public JsonResult PostUser([FromBody]List<Secondroom> secondrooms, string studentid)
         {
             try
             {
@@ -221,7 +221,7 @@ namespace demo.Api.Controllers
                 sqlConnection.Open();
                 foreach (var item in secondrooms)
                 {
-                    string sql = "INSERT INTO [demo].[dbo].[order] VALUES('" + item.Dishname + "','" + item.Price + "','" + item.Score + "','" + item.Time + "','" + item.Practice + "','" + item.Windows + "','" + item.Remarks + "','" + item.Number + "') ";
+                    string sql = "INSERT INTO [demo].[dbo].[order](studentid,dishname,price,score,time,practice,windows,remarks,number,isSubmit,isConfirm,isComplete,updatetime) VALUES('" + studentid + "','" + item.Dishname + "','" + item.Price + "','" + item.Score + "','" + item.Time + "','" + item.Practice + "','" + item.Windows + "','" + item.Remarks + "','" + item.Number + "','" + false + "','" + false + "','" + false + "','" + DateTime.Now.ToString() + "') ";
                     DataSet dataSet = new DataSet();
                     SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                     sqlDataAdapter.Fill(dataSet);

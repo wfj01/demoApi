@@ -14,6 +14,7 @@ namespace demo.Models
         public string StudentName { get; set; }
         public string StudentAddress { get; set; }
         public string StudentPhone { get; set; }
+        public bool IsSubmit { get; set; }
         public bool IsConfirm { get; set; } = false;
         public bool IsComplete { get; set; } = false;
 

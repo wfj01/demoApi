@@ -71,5 +71,33 @@ namespace demo.Api.Controllers.Business
                 return ApiResultBuilder<BusinessLogin>.Return(-2, "数据异常" + e.Message);
             }
         }
+
+        [HttpGet]
+        [Route("personaldata")]
+        public JsonResult Personaldata()
+        {
+            try
+            {
+                SqlConnection sqlConnection =
+                new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
+                sqlConnection.Open();
+                string sql = "SELECT * FROM businessMessage where name='王富军'";
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
+                DataSet dataSet = new DataSet();
+                sqlDataAdapter.Fill(dataSet);
+                if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
+                {
+                    return ApiResultBuilder<List<BusinessLogin>>.Return(0,"查询成功",dataSet);
+                }
+                else
+                {
+                    return ApiResultBuilder<BusinessLogin>.Return(-1, "查无数据");
+                }
+            }
+            catch (Exception e)
+            {
+                return ApiResultBuilder<BusinessLogin>.Return(-2, "数据异常" + e.Message);
+            }
+        }
     }
 }
