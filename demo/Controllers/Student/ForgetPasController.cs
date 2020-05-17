@@ -33,20 +33,19 @@ namespace demo.Api.Controllers
                  new SqlConnection(
                   "Server=localhost;User Id=sa;Password=123456789;Database=demo;");
                 sqlConnection.Open();
-                string sql = "SELECT * FROM [demo].[dbo].[Student] where studentname='" + users.Studentname + "'";
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
-                DataSet dataSet = new DataSet();
-                sqlDataAdapter.Fill(dataSet);
                 string sql1 = "SELECT * FROM [demo].[dbo].[Student] where studentid='" + users.Studentid + "'";
                 SqlDataAdapter sqlDataAdapter1 = new SqlDataAdapter(sql1, sqlConnection);
                 DataSet dataSet1 = new DataSet();
                 sqlDataAdapter1.Fill(dataSet1);
+                string sql = "SELECT * FROM [demo].[dbo].[Student] where studentname='" + users.Studentname + "'and studentid='" + users.Studentid + "'";
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
+                DataSet dataSet = new DataSet();
+                sqlDataAdapter.Fill(dataSet);
                 if ((dataSet1 != null && dataSet1.Tables.Count > 0 && dataSet1.Tables[0].Rows.Count > 0) == false)
                 {
                     return ApiResultBuilder<List<Login>>.Return(-1, "账号不存在");
                 }
-                if ((dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0) &&
-                    (dataSet1 != null && dataSet1.Tables.Count > 0 && dataSet1.Tables[0].Rows.Count > 0))
+                if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
                 {
                     string sq2 = "UPDATE [demo].[dbo].[Student] SET password='" + users.Password + "' WHERE studentid='" + users.Studentid + "'";
                     DataSet dataSet2 = new DataSet();

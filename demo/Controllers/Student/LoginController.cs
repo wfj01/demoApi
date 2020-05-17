@@ -39,14 +39,18 @@ namespace demo.Api.Controllers
                 SqlDataAdapter sqlDataAdapter1 = new SqlDataAdapter(sql1, sqlConnection);
                 DataSet dataSet1 = new DataSet();
                 sqlDataAdapter1.Fill(dataSet1);
-                string sql2 = "SELECT * FROM [demo].[dbo].[Student] where password='" + login.Password + "'";
+                string sql2 = "SELECT * FROM [demo].[dbo].[Student] where password='" + login.Password + "'and studentid='" + login.Studentid + "'";
                 SqlDataAdapter sqlDataAdapter2 = new SqlDataAdapter(sql2, sqlConnection);
                 DataSet dataSet2 = new DataSet();
                 sqlDataAdapter2.Fill(dataSet2);
+                string sql3 = "SELECT name FROM [demo].[dbo].[Student] where studentid='"+login.Studentid+"'";
+                SqlDataAdapter sqlDataAdapter3 = new SqlDataAdapter(sql2, sqlConnection);
+                DataSet dataSet3 = new DataSet();
+                sqlDataAdapter3.Fill(dataSet3);
                 if ((dataSet1 != null && dataSet1.Tables.Count > 0 && dataSet1.Tables[0].Rows.Count > 0) &&
                     (dataSet2 != null && dataSet2.Tables.Count > 0 && dataSet2.Tables[0].Rows.Count > 0))
                 {
-                    return ApiResultBuilder<List<Login>>.Return(0, "登录成功");
+                    return ApiResultBuilder<List<Login>>.Return(0, "登录成功",dataSet3);
                 }
                 else
                 {

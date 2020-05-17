@@ -34,16 +34,16 @@ namespace demo.Api.Controllers.Student
                 sqlDataAdapter.Fill(dataSet);
                 if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
                 {
-                    return ApiResultBuilder<List<Order>>.Return(0,"查询成功",dataSet);
+                    return ApiResultBuilder<List<Orderview>>.Return(0,"查询成功",dataSet);
                 }
                 else
                 {
-                    return ApiResultBuilder<Order>.Return(-1, "查无数据",dataSet);
+                    return ApiResultBuilder<Orderview>.Return(-1, "查无数据",dataSet);
                 }
             }
             catch (Exception e)
             {
-                return ApiResultBuilder<Order>.Return(-2, "数据异常" + e.Message);
+                return ApiResultBuilder<Orderview>.Return(-2, "数据异常" + e.Message);
             }
         }
 
@@ -54,7 +54,7 @@ namespace demo.Api.Controllers.Student
         /// <returns></returns>
         [HttpPost]
         [Route("updatanumber")]
-        public JsonResult UpdataNumber([FromBody]Order orders)
+        public JsonResult UpdataNumber([FromBody]Orderview orders)
         {
             try
             {
@@ -70,11 +70,11 @@ namespace demo.Api.Controllers.Student
                 DataSet dataSet = new DataSet();
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 sqlDataAdapter.Fill(dataSet);
-                return ApiResultBuilder<Order>.Return(0, "更新成功");
+                return ApiResultBuilder<Orderview>.Return(0, "更新成功");
             }
             catch (Exception e)
             {
-                return ApiResultBuilder<Order>.Return(-2, "数据异常" + e.Message);
+                return ApiResultBuilder<Orderview>.Return(-2, "数据异常" + e.Message);
             }
         }
 
@@ -93,23 +93,23 @@ namespace demo.Api.Controllers.Student
                  new SqlConnection(
                   "Server=localhost;User Id=sa;Password=123456789;Database=demo;");
                 sqlConnection.Open();
-                string sql1 = "Select * FROM [demo].[dbo].[Order] WHERE id=" + id;
+                string sql1 = "Select * FROM [demo].[dbo].[Orderview] WHERE id=" + id;
                 SqlDataAdapter sqlDataAdapter1 = new SqlDataAdapter(sql1, sqlConnection);
                 DataSet dataSet1 = new DataSet();
                 sqlDataAdapter1.Fill(dataSet1);
                 if ((dataSet1 != null && dataSet1.Tables.Count > 0 && dataSet1.Tables[0].Rows.Count > 0) == false)
                 {
-                    return ApiResultBuilder<Order>.Return(-1, "id不存在");
+                    return ApiResultBuilder<Orderview>.Return(-1, "id不存在");
                 }
-                string sql = "DELETE FROM [demo].[dbo].[Order] WHERE id=" + id;
+                string sql = "DELETE FROM [demo].[dbo].[Orderview] WHERE id=" + id;
                 DataSet dataSet = new DataSet();
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 sqlDataAdapter.Fill(dataSet);
-                return ApiResultBuilder<Order>.Return(0, "删除成功");
+                return ApiResultBuilder<Orderview>.Return(0, "删除成功");
             }
             catch (Exception e)
             {
-                return ApiResultBuilder<Order>.Return(-2, "数据异常" + e.Message);
+                return ApiResultBuilder<Orderview>.Return(-2, "数据异常" + e.Message);
             }
         }
 
@@ -124,7 +124,7 @@ namespace demo.Api.Controllers.Student
         /// <returns></returns>
         [HttpPost]
         [Route("confirmorder")]
-        public JsonResult Confirmorder([FromBody]List<Order> orders,string Studentid,string StudentName,string StudentAddress,string StudentPhone)
+        public JsonResult Confirmorder([FromBody]List<Orderview> orders,string Studentid,string StudentName,string StudentAddress,string StudentPhone)
         {
             try
             {
@@ -139,11 +139,11 @@ namespace demo.Api.Controllers.Student
                     sqlDataAdapter.Fill(dataSet);
                 }
                 QueryUser(Studentid);
-                return ApiResultBuilder<Order>.Return(0, "提交成功");
+                return ApiResultBuilder<Orderview>.Return(0, "提交成功");
             }
             catch (Exception e)
             {
-                return ApiResultBuilder<Order>.Return(-2, "数据异常" + e.Message);
+                return ApiResultBuilder<Orderview>.Return(-2, "数据异常" + e.Message);
             }
         }
 
@@ -162,16 +162,16 @@ namespace demo.Api.Controllers.Student
                 sqlDataAdapter.Fill(dataSet);
                 if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
                 {
-                    return ApiResultBuilder<List<Order>>.Return(0, "查询成功", dataSet);
+                    return ApiResultBuilder<List<Orderview>>.Return(0, "查询成功", dataSet);
                 }
                 else
                 {
-                    return ApiResultBuilder<Order>.Return(-1, "查无数据", dataSet);
+                    return ApiResultBuilder<Orderview>.Return(-1, "查无数据", dataSet);
                 }
             }
             catch (Exception e)
             {
-                return ApiResultBuilder<Order>.Return(-2, "数据异常" + e.Message);
+                return ApiResultBuilder<Orderview>.Return(-2, "数据异常" + e.Message);
             }
         }
     }

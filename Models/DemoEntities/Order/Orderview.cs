@@ -4,7 +4,7 @@ using System.Text;
 
 namespace demo.Models.DemoEntities.Student
 {
-    public class Order
+    public class Orderview
     {
         /// <summary>
         /// id
@@ -59,6 +59,12 @@ namespace demo.Models.DemoEntities.Student
         /// 是否完成
         /// </summary>
         public bool IsComplete { get; set; } = false;
+
+        public bool IsEvaluate { get; set; } = false;
+
+        public string Rate { get; set; } = "";
+
+        public string Comment { get; set; } = "";
 
 
         /// <summary>
