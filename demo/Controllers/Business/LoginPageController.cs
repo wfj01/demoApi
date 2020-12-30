@@ -37,7 +37,7 @@ namespace demo.Api.Controllers.Business
                 SqlDataAdapter sqlDataAdapter2 = new SqlDataAdapter(sql2, sqlConnection);
                 DataSet dataSet2 = new DataSet();
                 sqlDataAdapter2.Fill(dataSet2);
-                string sql3= "SELECT name FROM [demo].[dbo].[licenseCode] Where code='" + businessLogin.License+"'";
+                string sql3= "SELECT name FROM [demo].[dbo].[businessMessage] Where license='" + businessLogin.License+"'";
                 SqlDataAdapter sqlDataAdapter3 = new SqlDataAdapter(sql3, sqlConnection);
                 DataSet dataSet3= new DataSet();
                 sqlDataAdapter3.Fill(dataSet3);
@@ -46,13 +46,13 @@ namespace demo.Api.Controllers.Business
                     if ((dataSet1 != null && dataSet1.Tables.Count > 0 && dataSet1.Tables[0].Rows.Count > 0) &&
                     (dataSet2 != null && dataSet2.Tables.Count > 0 && dataSet2.Tables[0].Rows.Count > 0))
                 {
-                    return new JsonResult("查询成功");
-                }
+                        return ApiResultBuilder<List<BusinessLogin>>.Return(0, "查询成功");
+                    }
                 else
                 {
                     if ((dataSet1 != null && dataSet1.Tables.Count > 0 && dataSet1.Tables[0].Rows.Count > 0) == false)
                     {
-                        return ApiResultBuilder<List<BusinessLogin>>.Return(-1, "Id不正确");
+                        return ApiResultBuilder<List<BusinessLogin>>.Return(-1, "账号不正确");
                     }
                     else
                     {
@@ -81,7 +81,7 @@ namespace demo.Api.Controllers.Business
                 SqlConnection sqlConnection =
                 new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
                 sqlConnection.Open();
-                string sql = "SELECT * FROM businessMessage where name='王富军'";
+                string sql = "SELECT * FROM businessMessage where name='wangfujun'";
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 DataSet dataSet = new DataSet();
                 sqlDataAdapter.Fill(dataSet);

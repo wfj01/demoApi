@@ -2,14 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace demo.Models.DemoEntities
+namespace demo.Models.DemoEntities.Business
 {
-    /// <summary>
-    /// 大学城订餐
-    /// </summary>
-    public class Collegetown
+    public class Totalshopping
     {
-
         /// <summary>
         /// id
         /// </summary>
@@ -26,7 +22,7 @@ namespace demo.Models.DemoEntities
         /// <summary>
         /// 得分
         /// </summary>
-        public string Score { get; set; }
+        public string Praction { get; set; }
 
         /// <summary>
         /// 时间
@@ -47,10 +43,5 @@ namespace demo.Models.DemoEntities
         /// 备注
         /// </summary>
         public string Remarks { get; set; }
-
-        /// <summary>
-        /// 数量
-        /// </summary>
-        public string Number { get; set; }
     }
 }

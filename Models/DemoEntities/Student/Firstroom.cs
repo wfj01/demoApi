@@ -19,7 +19,7 @@ namespace demo.Models.DemoEntities
     /// </summary>
     public string Dishname { get; set; }
     /// <summary>
-    /// 价格
+    /// 价格总量
     /// </summary>
     public string Price { get; set; }
     /// <summary>
@@ -33,11 +33,6 @@ namespace demo.Models.DemoEntities
     public string Time { get; set; }
 
     /// <summary>
-    /// 做法
-    /// </summary>
-    public string Practice { get; set; }
-
-    /// <summary>
     /// 购买窗口
     /// </summary>
     public string Windows { get; set; }
@@ -47,9 +42,25 @@ namespace demo.Models.DemoEntities
      /// </summary>
     public string Remarks { get; set; }
 
+    
+     /// <summary>
+     /// 图片地址
+     /// </summary>
+    public string ImageSrc { get; set; }
+
     /// <summary>
     /// 数量
     /// </summary>
     public string Number { get; set; }
+
+    /// <summary>
+    /// 几人份
+    /// </summary>
+    public string Guige1 { get; set; }
+
+    /// <summary>
+    /// 辣度
+    /// </summary>
+    public string Guige2 { get; set; }
     }
 }

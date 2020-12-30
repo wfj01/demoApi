@@ -16,8 +16,11 @@ namespace demo.Models.DemoEntities.Student
 
         public string time { get; set; }
 
+        public string score { get; set; }
+
         public string windows { get; set; }
 
         public string remarks { get; set; }
+
     }
 }

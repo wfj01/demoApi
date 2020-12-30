@@ -69,5 +69,39 @@ namespace demo.Api.Controllers
                 return ApiResultBuilder<Login>.Return(-2, "数据异常" + e.Message);
             }
         }
+
+
+        /// <summary>
+        /// 登录接口
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("searchdata")]
+        public JsonResult Searchdata(string id)
+        {
+            try
+            {
+                SqlConnection sqlConnection =
+                     new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
+                sqlConnection.Open();
+                string sql1 = "SELECT * FROM [demo].[dbo].[Student] where studentid='" + id + "'";
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql1, sqlConnection);
+                DataSet dataSet = new DataSet();
+                sqlDataAdapter.Fill(dataSet);
+                if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
+                {
+                    return ApiResultBuilder<List<Login>>.Return(0, "查询成功", dataSet);
+                }
+                else
+                {
+                    return ApiResultBuilder<List<Login>>.Return(-1, "查无数据", dataSet);
+                }
+            }
+            catch (Exception e)
+            {
+                return ApiResultBuilder<Login>.Return(-2, "数据异常" + e.Message);
+            }
+        }
     }
 }

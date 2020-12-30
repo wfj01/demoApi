@@ -15,6 +15,9 @@ namespace demo.Api.Controllers.Student
     [ApiController]
     public class BusinessController : ControllerBase
     {
+        /// <summary>
+        /// 加载数据
+        /// </summary>
         [HttpGet]
         [Route("loaddata")]
         public JsonResult Loaddata()
@@ -24,7 +27,7 @@ namespace demo.Api.Controllers.Student
                 SqlConnection sqlConnection =
                 new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
                 sqlConnection.Open();
-                string sql = "SELECT * FROM shopping";
+                string sql = "SELECT * FROM [demo].[dbo].[shangpin]";
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 DataSet dataSet = new DataSet();
                 sqlDataAdapter.Fill(dataSet);
@@ -43,9 +46,12 @@ namespace demo.Api.Controllers.Student
             }
         }
 
+        /// <summary>
+        /// 新增数据
+        /// </summary>
         [HttpPost]
         [Route("adddate")]
-        public JsonResult Adddate([FromBody] Businessview business)
+        public JsonResult Adddate([FromBody] Businessview business,string valueText)
         {
             try
             {
@@ -53,11 +59,46 @@ namespace demo.Api.Controllers.Student
                 new SqlConnection(
                  "Server=localhost;User Id=sa;Password=123456789;Database=demo;");
                 sqlConnection.Open();
-                string sql = "INSERT INTO [demo].[dbo].[shopping] VALUES(" + business.id + ",'" + business.dishname + "','" + business.price + "','" + business.practice + "','" + business.time + "','" + business.windows + "','" + business.remarks + "') ";
-                DataSet dataSet = new DataSet();
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
-                sqlDataAdapter.Fill(dataSet);
-                return ApiResultBuilder<Businessview>.Return(0, "插入成功");
+                
+                if (valueText == "第一餐厅一窗口")
+                {
+                    string sql1 = "INSERT INTO [demo].[dbo].[firstroom](dishname,price,score,time,remarks,windows,practice,number) VALUES('" + business.dishname + "','" + business.price + "','" + business.score + "','" + business.time + "','" + business.remarks + "','" + valueText + "','" + business.practice + "','" + 1 + "') ";
+                    DataSet dataSet1 = new DataSet();
+                    SqlDataAdapter sqlDataAdapter1 = new SqlDataAdapter(sql1, sqlConnection);
+                    sqlDataAdapter1.Fill(dataSet1);
+                    return ApiResultBuilder<Businessview>.Return(0, "插入成功",dataSet1);
+                }
+                else if (valueText == "第二餐厅一窗口")
+                {
+                    string sql1 = "INSERT INTO [demo].[dbo].[secondroom](dishname,price,score,time,remarks,windows,practice,number) VALUES('" + business.dishname + "','" + business.price + "','" + business.score + "','" + business.time + "','" + business.remarks + "','" + valueText + "','" + business.practice + "','" + 1 + "') ";
+                    DataSet dataSet1 = new DataSet();
+                    SqlDataAdapter sqlDataAdapter1 = new SqlDataAdapter(sql1, sqlConnection);
+                    sqlDataAdapter1.Fill(dataSet1);
+                    return ApiResultBuilder<Businessview>.Return(0, "插入成功", dataSet1);
+                }
+                else if (valueText == "南门饭店")
+                {
+                    string sql1 = "INSERT INTO [demo].[dbo].[southsnack](dishname,price,score,time,remarks,windows,practice,number) VALUES('" + business.dishname + "','" + business.price + "','" + business.score + "','" + business.time + "','" + business.remarks + "','" + valueText + "','" + business.practice + "','" + 1 + "') ";
+                    DataSet dataSet1 = new DataSet();
+                    SqlDataAdapter sqlDataAdapter1 = new SqlDataAdapter(sql1, sqlConnection);
+                    sqlDataAdapter1.Fill(dataSet1);
+                    return ApiResultBuilder<Businessview>.Return(0, "插入成功", dataSet1);
+                }
+                else if (valueText == "大学城")
+                {
+                    string sql1 = "INSERT INTO [demo].[dbo].[collegetown](dishname,price,score,time,remarks,windows,practice,number) VALUES('" + business.dishname + "','" + business.price + "','" + business.score + "','" + business.time + "','" + business.remarks + "','" + valueText + "','" + business.practice + "','" + 1 + "') ";
+                    DataSet dataSet1 = new DataSet();
+                    SqlDataAdapter sqlDataAdapter1 = new SqlDataAdapter(sql1, sqlConnection);
+                    sqlDataAdapter1.Fill(dataSet1);
+                    return ApiResultBuilder<Businessview>.Return(0, "插入成功", dataSet1);
+                }
+                else {
+                    string sql = "INSERT INTO [demo].[dbo].[shangpin](dishname,price,score,time,remarks,windows,practice,number) VALUES('" + business.dishname + "','" + business.price + "','" + business.score + "','" + business.time + "','" + business.remarks + "','" + valueText + "','" + business.practice + "','" + 1 + "') ";
+                    DataSet dataSet = new DataSet();
+                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
+                    sqlDataAdapter.Fill(dataSet);
+                    return ApiResultBuilder<Businessview>.Return(0, "插入成功",dataSet);
+                }
 
             }
             catch (Exception e)
@@ -81,7 +122,7 @@ namespace demo.Api.Controllers.Student
                   "Server=localhost;User Id=sa;Password=123456789;Database=demo;");
                 sqlConnection.Open();
                 string sql =
-                    "UPDATE [demo].[dbo].[shopping" +
+                    "UPDATE [demo].[dbo].[shangpin" +
                     "] SET dishname='" + business.dishname
                     + "',price='" + business.price + "',practice='" + business.practice
                     + "',time='" + business.time + "',windows='" + business.windows + "',remarks='" + business.remarks + "";
@@ -112,7 +153,7 @@ namespace demo.Api.Controllers.Student
                  new SqlConnection(
                   "Server=localhost;User Id=sa;Password=123456789;Database=demo;");
                 sqlConnection.Open();
-                string sql1 = "Select * FROM [demo].[dbo].[shopping] WHERE id=" + id;
+                string sql1 = "Select * FROM [demo].[dbo].[shangpin] WHERE id=" + id;
                 SqlDataAdapter sqlDataAdapter1 = new SqlDataAdapter(sql1, sqlConnection);
                 DataSet dataSet1 = new DataSet();
                 sqlDataAdapter1.Fill(dataSet1);
@@ -120,7 +161,7 @@ namespace demo.Api.Controllers.Student
                 {
                     return ApiResultBuilder<Businessview>.Return(-1, "id不存在");
                 }
-                string sql = "DELETE FROM [demo].[dbo].[shopping] WHERE id=" + id;
+                string sql = "DELETE FROM [demo].[dbo].[shangpin] WHERE id=" + id;
                 DataSet dataSet = new DataSet();
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 sqlDataAdapter.Fill(dataSet);

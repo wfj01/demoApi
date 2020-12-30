@@ -34,11 +34,11 @@ namespace demo.Api.Controllers
                 sqlDataAdapter.Fill(dataSet);
                 if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
                 {
-                    return ApiResultBuilder<List<Online>>.Return(dataSet);
+                    return ApiResultBuilder<List<Online>>.Return(0,"查询成功",dataSet);
                 }
                 else
                 {
-                    return ApiResultBuilder<Online>.Return(-1, "查无数据");
+                    return ApiResultBuilder<Online>.Return(-1, "查无数据",dataSet);
                 }
             }
             catch (Exception e)
@@ -66,11 +66,11 @@ namespace demo.Api.Controllers
                 sqlDataAdapter.Fill(dataSet);
                 if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
                 {
-                    return ApiResultBuilder<List<Online>>.Return(dataSet);
+                    return ApiResultBuilder<List<Online>>.Return(0, "查询成功", dataSet);
                 }
                 else
                 {
-                    return ApiResultBuilder<Online>.Return(-1, "查无数据");
+                    return ApiResultBuilder<Online>.Return(-1, "查无数据",dataSet);
                 }
             }
             catch (Exception e)
@@ -98,11 +98,11 @@ namespace demo.Api.Controllers
                 sqlDataAdapter.Fill(dataSet);
                 if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
                 {
-                    return ApiResultBuilder<List<Online>>.Return(dataSet);
+                    return ApiResultBuilder<List<Online>>.Return(0, "查询成功", dataSet);
                 }
                 else
                 {
-                    return ApiResultBuilder<Online>.Return(-1, "查无数据");
+                    return ApiResultBuilder<Online>.Return(-1, "查无数据",dataSet);
                 }
             }
             catch (Exception e)
@@ -127,7 +127,7 @@ namespace demo.Api.Controllers
                 DataSet dataSet = new DataSet();
                 sqlDataAdapter.Fill(dataSet);
 
-                return ApiResultBuilder<Online>.Return(0, "确认订单成功");
+                return ApiResultBuilder<Online>.Return(0, "确认订单成功",dataSet);
             }
             catch (Exception e)
             {
@@ -148,7 +148,7 @@ namespace demo.Api.Controllers
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 DataSet dataSet = new DataSet();
                 sqlDataAdapter.Fill(dataSet);
-                return ApiResultBuilder<Online>.Return(0, "订单已完成");
+                return ApiResultBuilder<Online>.Return(0, "订单已完成",dataSet);
             }
             catch (Exception e)
             {

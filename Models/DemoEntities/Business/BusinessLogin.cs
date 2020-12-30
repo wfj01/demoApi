@@ -13,8 +13,9 @@ namespace demo.Models.DemoEntities.Business
         public string Shopaddress { get; set; }
         public string Phonenumber { get; set; }
         public string Selfintroduction { get; set; }
-        public DateTime ?Createddate { get; set; } = new DateTime();
-        public DateTime ?Updatedate { get; set; } = new DateTime();
+        public DateTime ?Createddate { get; set; }
+        public DateTime ?Updatedate { get; set; }
         public string License { get; set; }
+        public string Registermudi { get; set; }
     }
 }

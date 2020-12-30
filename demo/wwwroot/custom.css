@@ -1,0 +1,19 @@
+﻿
+.logo__title {
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+.swagger-ui a.nostyle, .swagger-ui a.nostyle:visited {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: pointer;
+    color: red;
+}
+
+.swagger-ui .opblock-tag {
+    font-size: 24px;
+    margin: 0 0 5px;
+    font-family: Titillium Web,sans-serif;
+    color: #0ff;
+}
