@@ -13,12 +13,12 @@ namespace demo.Models.Common
     /// </summary>
     public class ApiResultBuilder<T> where T : class//, new()
     {
-        public static JsonResult Return(ReturnResultNormal<T> obj)
+        public static JsonResult Return(int v, ReturnResultNormal<T> obj)
         {
             return new JsonResult(obj);
         }
 
-        public static JsonResult Return(DataSet obj)
+        public static JsonResult Return(int v, DataSet obj)
         {
             return new JsonResult(new ReturnResultNormal<DataSet>(obj));
         }
@@ -42,6 +42,11 @@ namespace demo.Models.Common
         public static JsonResult Ok()
         {
             return new JsonResult(new ReturnResultNormal<T>());
+        }
+
+        public static JsonResult Return(DataSet dataSet)
+        {
+            throw new NotImplementedException();
         }
 
 

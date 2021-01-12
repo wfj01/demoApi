@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using demo.Models;
 using demo.Models.Common;
 using demo.Models.DemoEntities;
 using Microsoft.AspNetCore.Http;
@@ -19,12 +20,11 @@ namespace demo.Api.Controllers.Orderview
         /// <summary>
         /// 向订单表中添加数据
         /// </summary>
-        /// <param name="firstrooms"></param>
-        /// <param name="studentid"></param>
+        /// <param name="orders">数组数据</param>
         /// <returns></returns>
         [HttpPost]
-        [Route("postUser")]
-        public JsonResult PostUser([FromBody]List<Firstroom> firstrooms, string studentid)
+        [Route("PostOrder")]
+        public JsonResult PostOrder([FromBody]List<Online> orders)
         {
             try
             {
@@ -33,14 +33,56 @@ namespace demo.Api.Controllers.Orderview
                   "Server=localhost;User Id=sa;Password=123456789;Database=demo;");
                 sqlConnection.Open();
                 var TimeStamps = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000;
-                foreach (var item in firstrooms)
+                foreach (var item in orders)
                 {
-                    string sql = "INSERT INTO [demo].[dbo].[order](studentid,dishname,price,score,time,windows,remarks,number,isSubmit,isConfirm,isComplete,isEvaluate,updatetime) VALUES('" + studentid + "','" + item.Dishname + "','" + item.Price + "','" + item.Score + "','" + item.Time + "','" + item.Windows + "','" + item.Remarks + "','" + item.Number + "','" + 0 + "','" + 0 + "','" + 0 + "','" + 0 + "','" + TimeStamps + "') ";
+                    string sql = "INSERT INTO [demo].[dbo].[order](shoppingid,name,username,address,phone,dishname,price,sumprice,time,windows,remarks,number,isSubmit,isConfirm,isComplete,isEvaluate,imageSrc,guige1,ladu,updatetime) VALUES" +
+                        "('" + item.Shoppingid + "','" + item.Name + "','" + item.Username + "','" + item.Address + "','" + item.Phone + "','" + item.Dishname + "','" + item.Price + "','" + item.SumPrice + "','" + item.Time + "','" + item.Windows + "','" + item.Remarks + "','" + item.Number + "','" + 0 + "','" + 0 + "','" + 0 + "','" + 0 + "','" + item.ImageSrc + "','" + item.Guige1 + "','" + item.Ladu + "','" + TimeStamps + "') ";
                     DataSet dataSet = new DataSet();
                     SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                     sqlDataAdapter.Fill(dataSet);
                 }
-                return ApiResultBuilder<Firstroom>.Return(0, "保存到购物车成功");
+                foreach (var item in orders)
+                {
+                    string sql = "DELETE FROM [demo].[dbo].[shopping] WHERE shoppingid='" + item.Shoppingid + "' And username='" + item.Username + "'";
+                    DataSet dataSet = new DataSet();
+                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
+                    sqlDataAdapter.Fill(dataSet);
+                }
+                return new JsonResult(new { rtnCode = 0, resultMsg = "保存到购物车成功",data=TimeStamps });
+            }
+            catch (Exception e)
+            {
+                return ApiResultBuilder<Firstroom>.Return(-2, "数据异常" + e.Message);
+            }
+        }
+        #endregion
+
+        #region 加载订单数据
+        /// <summary>
+        /// 加载订单数据
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("QueryOrderDetail")]
+        public JsonResult QueryOrderDetail(string username,string updatetime)
+        {
+            try
+            {
+                SqlConnection sqlConnection =
+                 new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
+                sqlConnection.Open();
+                string sql = "SELECT * FROM [demo].[dbo].[order] where username='"+username+"'And updatetime='"+updatetime+"'";
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
+                DataSet dataSet = new DataSet();
+                sqlDataAdapter.Fill(dataSet);
+                if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
+                {
+                    return ApiResultBuilder<List<Firstroom>>.Return(0, "查询成功", dataSet);
+                }
+                else
+                {
+                    return ApiResultBuilder<List<Firstroom>>.Return(-1, "查无数据", dataSet);
+                }
             }
             catch (Exception e)
             {

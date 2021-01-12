@@ -7,17 +7,28 @@ namespace demo.Models
     public class Online
     {
         public string Id { get; set; }
+        public string Shoppingid { get; set; }
+        public string Name { get; set; }
+        public string Username { get; set; }
+        public string Address { get; set; }
+        public string Phone { get; set; }
         public string Dishname { get; set; }
-        public string Prices { get; set; }
+        public string Price { get; set; }
+        public string SumPrice { get; set; }
         public string Remarks { get; set; }
+        public string Time { get; set; }
         public string Number { get; set; }
-        public string StudentName { get; set; }
-        public string StudentAddress { get; set; }
-        public string StudentPhone { get; set; }
-        public bool IsSubmit { get; set; }
-        public bool IsConfirm { get; set; } = false;
-        public bool IsComplete { get; set; } = false;
+        public string Windows { get; set; }
+        public string ImageSrc { get; set; }
+        public string Guige1 { get; set; }
+        public string Ladu { get; set; }
+        public string IsSubmit { get; set; }
+        public string IsConfirm { get; set; }
+        public string IsComplete { get; set; }
+        public string IsEvaluate { get; set; }
+    }
 
-        public string UpdateTime { get; set; } = DateTime.Now.ToString();
+    public class IdList {
+        public string OrderId { get; set; }
     }
 }

@@ -9,20 +9,22 @@ namespace demo.Models.DemoEntities
     /// </summary>
     public class Register
     {
-        /// <summary>
-        /// Id
-        /// </summary>
-        public int Id { get; set; }
 
         /// <summary>
-        /// 学生学号
+        /// 头像
         /// </summary>
-        public string Studentid { get; set; }
+        public string Portrait { get; set; }
+
 
         /// <summary>
-        /// 学生姓名
+        /// 昵称或账号
         /// </summary>
-        public string Studentname { get; set; }
+        public string UserName { get; set; }
+
+        /// <summary>
+        /// 姓名
+        /// </summary>
+        public string Name { get; set; }
         
         /// <summary>
         /// 密码
@@ -33,11 +35,6 @@ namespace demo.Models.DemoEntities
         /// 手机号码
         /// </summary>
         public string Telephone { get;set; }
-
-        /// <summary>
-        /// 常用地址
-        /// </summary>
-        public string Address { get; set; }
 
         /// <summary>
         /// 电子邮箱
@@ -52,12 +49,7 @@ namespace demo.Models.DemoEntities
         /// <summary>
         /// 出生年月
         /// </summary>
-        public DateTime? Birtherdate { get; set; }
-
-        /// <summary>
-        /// 创建日期
-        /// </summary>
-        public DateTime? Createtime { get; set; }
+        public string Birtherdate { get; set; }
 
         /// <summary>
         /// 更新日期

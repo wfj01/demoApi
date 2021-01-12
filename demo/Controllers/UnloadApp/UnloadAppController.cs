@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -7,16 +9,16 @@ using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Internal;
 
-namespace FileUploadManage.Controllers
+namespace demo.Api.Controllers.UnloadApp
 {
     /// <summary>
-    /// 图片，视频，音频，文档等相关文件通用上传服务类
+    /// 上传APP文件用来更新
     /// </summary>
-    public class FileUploadController : Controller
+    public class UnloadAppController : Controller
     {
         private static IHostingEnvironment _hostingEnvironment;
 
-        public FileUploadController(IHostingEnvironment hostingEnvironment)
+        public UnloadAppController( IHostingEnvironment hostingEnvironment)
         {
             _hostingEnvironment = hostingEnvironment;
         }
@@ -24,13 +26,13 @@ namespace FileUploadManage.Controllers
         /// <summary>
         ///  多文件上传
         /// </summary>
-        /// <param name="formCollection">表单集合值</param>
         /// <returns>服务器存储的文件信息</returns>
-        [HttpPost]
-        [Route("MultiFileUpload")]
-        public JsonResult MultiFileUpload(IFormCollection formCollection)
+        [HttpGet]
+        [Route("MultiFileAppUpload")]
+        public JsonResult MultiFileAppUpload(string appid, string note, string version, IFormCollection formCollection)
         {
             var currentDate = DateTime.Now;
+            var completeFilePath = "";
             var webRootPath = _hostingEnvironment.WebRootPath;//>>>相当于HttpContext.Current.Server.MapPath("") 
             var uploadFileRequestList = new List<UploadFileRequest>();
             try
@@ -44,7 +46,7 @@ namespace FileUploadManage.Controllers
                     {
                         var uploadFileRequest = new UploadFileRequest();
 
-                        var filePath = $"/UploadFile/File/{currentDate:yyyyMMdd}/";
+                        var filePath = $"/UploadFile/App/{currentDate:yyyyMMdd}/";
 
                         //创建每日存储文件夹
                         if (!Directory.Exists(webRootPath + filePath))
@@ -74,7 +76,7 @@ namespace FileUploadManage.Controllers
                         }
 
                         //完整的文件路径
-                        var completeFilePath = Path.Combine(filePath, saveName);
+                        completeFilePath = Path.Combine(filePath, saveName);
 
                         uploadFileRequestList.Add(new UploadFileRequest()
                         {
@@ -95,6 +97,13 @@ namespace FileUploadManage.Controllers
 
             if (uploadFileRequestList.Any())
             {
+                SqlConnection sqlConnection =
+                     new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
+                sqlConnection.Open();
+                string sql1 = "INSERT INTO [dbo].updateApp (appid, url,note,version) VALUES  ('" + appid+ "', '" + completeFilePath + "', '" + note + "', '" + version + "') ";
+                SqlDataAdapter sqlDataAdapter1 = new SqlDataAdapter(sql1, sqlConnection);
+                DataSet dataSet1 = new DataSet();
+                sqlDataAdapter1.Fill(dataSet1);
                 return new JsonResult(new { isSuccess = true, returnMsg = "上传成功", filePathArray = uploadFileRequestList });
             }
             else

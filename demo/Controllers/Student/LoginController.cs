@@ -35,15 +35,15 @@ namespace demo.Api.Controllers
                 SqlConnection sqlConnection =
                      new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
                 sqlConnection.Open();
-                string sql1 = "SELECT * FROM [demo].[dbo].[Student] where studentid='" + login.Studentid+"'";
+                string sql1 = "SELECT * FROM [demo].[dbo].[user] where username='" + login.Username+"'";
                 SqlDataAdapter sqlDataAdapter1 = new SqlDataAdapter(sql1, sqlConnection);
                 DataSet dataSet1 = new DataSet();
                 sqlDataAdapter1.Fill(dataSet1);
-                string sql2 = "SELECT * FROM [demo].[dbo].[Student] where password='" + login.Password + "'and studentid='" + login.Studentid + "'";
+                string sql2 = "SELECT * FROM [demo].[dbo].[user] where password='" + login.Password + "'and username='" + login.Username + "'";
                 SqlDataAdapter sqlDataAdapter2 = new SqlDataAdapter(sql2, sqlConnection);
                 DataSet dataSet2 = new DataSet();
                 sqlDataAdapter2.Fill(dataSet2);
-                string sql3 = "SELECT name FROM [demo].[dbo].[Student] where studentid='"+login.Studentid+"'";
+                string sql3 = "SELECT name FROM [demo].[dbo].[user] where username='" + login.Username + "'";
                 SqlDataAdapter sqlDataAdapter3 = new SqlDataAdapter(sql2, sqlConnection);
                 DataSet dataSet3 = new DataSet();
                 sqlDataAdapter3.Fill(dataSet3);
@@ -74,18 +74,18 @@ namespace demo.Api.Controllers
         /// <summary>
         /// 登录接口
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="username"></param>
         /// <returns></returns>
         [HttpGet]
         [Route("searchdata")]
-        public JsonResult Searchdata(string id)
+        public JsonResult Searchdata(string username)
         {
             try
             {
                 SqlConnection sqlConnection =
                      new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
                 sqlConnection.Open();
-                string sql1 = "SELECT * FROM [demo].[dbo].[Student] where studentid='" + id + "'";
+                string sql1 = "SELECT * FROM [demo].[dbo].[user] where username='" + username + "'";
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql1, sqlConnection);
                 DataSet dataSet = new DataSet();
                 sqlDataAdapter.Fill(dataSet);

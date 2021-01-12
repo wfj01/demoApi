@@ -16,9 +16,9 @@ namespace demo.Models.DemoEntities
         public int? Id { get; set; }
 
         /// <summary>
-        /// 学生id
+        /// username
         /// </summary>
-        public string Studentid { get; set; }
+        public string Username { get; set; }
 
         /// <summary>
         /// 密码

@@ -111,49 +111,49 @@ namespace demo.Api.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("confirmorder")]
-        public JsonResult Confirmorder([FromQuery] Online online,string id)
-        {
+        //[HttpGet]
+        //[Route("confirmorder")]
+        //public JsonResult Confirmorder([FromQuery] Online online,string id)
+        //{
 
 
-            try
-            {
-                SqlConnection sqlConnection =
-                new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
-                sqlConnection.Open();
-                string sql = "UPDATE [demo].[dbo].[Order] set isConfirm='" + true + "',updatetime='"+online.UpdateTime+"'where id='" + id + "'";
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
-                DataSet dataSet = new DataSet();
-                sqlDataAdapter.Fill(dataSet);
+        //    try
+        //    {
+        //        SqlConnection sqlConnection =
+        //        new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
+        //        sqlConnection.Open();
+        //        string sql = "UPDATE [demo].[dbo].[Order] set isConfirm='" + true + "',updatetime='"+online.UpdateTime+"'where id='" + id + "'";
+        //        SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
+        //        DataSet dataSet = new DataSet();
+        //        sqlDataAdapter.Fill(dataSet);
 
-                return ApiResultBuilder<Online>.Return(0, "确认订单成功",dataSet);
-            }
-            catch (Exception e)
-            {
-                return ApiResultBuilder<Online>.Return(-2, "数据异常" + e.Message);
-            }
-        }
+        //        return ApiResultBuilder<Online>.Return(0, "确认订单成功",dataSet);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return ApiResultBuilder<Online>.Return(-2, "数据异常" + e.Message);
+        //    }
+        //}
 
-        [HttpGet]
-        [Route("completemorder")]
-        public JsonResult Completemorder([FromQuery] Online online, string id)
-        {
-            try
-            {
-                SqlConnection sqlConnection =
-                new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
-                sqlConnection.Open();
-                string sql = "UPDATE [demo].[dbo].[Order] set isComplete='" + true + "',updatetime='" + online.UpdateTime + "'where id='" + id + "'";
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
-                DataSet dataSet = new DataSet();
-                sqlDataAdapter.Fill(dataSet);
-                return ApiResultBuilder<Online>.Return(0, "订单已完成",dataSet);
-            }
-            catch (Exception e)
-            {
-                return ApiResultBuilder<Online>.Return(-2, "数据异常" + e.Message);
-            }
-        }
+        //[HttpGet]
+        //[Route("completemorder")]
+        //public JsonResult Completemorder([FromQuery] Online online, string id)
+        //{
+        //    try
+        //    {
+        //        SqlConnection sqlConnection =
+        //        new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
+        //        sqlConnection.Open();
+        //        string sql = "UPDATE [demo].[dbo].[Order] set isComplete='" + true + "',updatetime='" + online.UpdateTime + "'where id='" + id + "'";
+        //        SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
+        //        DataSet dataSet = new DataSet();
+        //        sqlDataAdapter.Fill(dataSet);
+        //        return ApiResultBuilder<Online>.Return(0, "订单已完成",dataSet);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return ApiResultBuilder<Online>.Return(-2, "数据异常" + e.Message);
+        //    }
+        //}
     }
 }

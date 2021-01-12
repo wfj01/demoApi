@@ -25,7 +25,7 @@ namespace demo.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("updateForgetPass")]
-        public JsonResult UpdateForgetPass([FromBody]User users)
+        public JsonResult UpdateForgetPass([FromForm]User users)
         {
             try
             {
@@ -33,11 +33,11 @@ namespace demo.Api.Controllers
                  new SqlConnection(
                   "Server=localhost;User Id=sa;Password=123456789;Database=demo;");
                 sqlConnection.Open();
-                string sql1 = "SELECT * FROM [demo].[dbo].[Student] where studentid='" + users.Studentid + "'";
+                string sql1 = "SELECT * FROM [demo].[dbo].[user] where username='" + users.Username + "'";
                 SqlDataAdapter sqlDataAdapter1 = new SqlDataAdapter(sql1, sqlConnection);
                 DataSet dataSet1 = new DataSet();
                 sqlDataAdapter1.Fill(dataSet1);
-                string sql = "SELECT * FROM [demo].[dbo].[Student] where studentid='" + users.Studentid + "'";
+                string sql = "SELECT * FROM [demo].[dbo].[user] where username='" + users.Username + "'";
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 DataSet dataSet = new DataSet();
                 sqlDataAdapter.Fill(dataSet);
@@ -47,7 +47,7 @@ namespace demo.Api.Controllers
                 }
                 if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
                 {
-                    string sq2 = "UPDATE [demo].[dbo].[Student] SET password='" + users.Password + "' WHERE studentid='" + users.Studentid + "'";
+                    string sq2 = "UPDATE [demo].[dbo].[user] SET password='" + users.Password + "' WHERE username='" + users.Username + "'";
                     DataSet dataSet2 = new DataSet();
                     SqlDataAdapter sqlDataAdapter2 = new SqlDataAdapter(sq2, sqlConnection);
                     sqlDataAdapter2.Fill(dataSet2);

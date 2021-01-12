@@ -22,29 +22,55 @@ namespace demo.Api.Controllers.Notice
         /// <returns></returns>
         [HttpGet]
         [Route("QueryNotice")]
-        public JsonResult QueryNotice()
+        public JsonResult QueryNotice(string id)
         {
-            try
+            SqlConnection sqlConnection =
+            new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
+            sqlConnection.Open();
+            if (id == null)
             {
-                SqlConnection sqlConnection =
-                 new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
-                sqlConnection.Open();
-                string sql = "SELECT * FROM [demo].[dbo].[notice]";
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
-                DataSet dataSet = new DataSet();
-                sqlDataAdapter.Fill(dataSet);
-                if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
+                try
                 {
-                    return ApiResultBuilder<List<notice>>.Return(0, "查询成功", dataSet);
+                   
+                    string sql = "SELECT * FROM [demo].[dbo].[notice] ";
+                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
+                    DataSet dataSet = new DataSet();
+                    sqlDataAdapter.Fill(dataSet);
+                    if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
+                    {
+                        return ApiResultBuilder<List<notice>>.Return(0, "查询成功", dataSet);
+                    }
+                    else
+                    {
+                        return ApiResultBuilder<List<notice>>.Return(-1, "查无数据", dataSet);
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    return ApiResultBuilder<List<notice>>.Return(-1, "查无数据", dataSet);
+                    return ApiResultBuilder<notice>.Return(-2, "数据异常" + e.Message);
                 }
             }
-            catch (Exception e)
+            else
             {
-                return ApiResultBuilder<notice>.Return(-2, "数据异常" + e.Message);
+                try
+                {
+                    string sql = "SELECT * FROM [demo].[dbo].[notice] where nid = '" + id + "'";
+                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
+                    DataSet dataSet = new DataSet();
+                    sqlDataAdapter.Fill(dataSet);
+                    if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
+                    {
+                        return ApiResultBuilder<List<notice>>.Return(0, "查询成功", dataSet);
+                    }
+                    else
+                    {
+                        return ApiResultBuilder<List<notice>>.Return(-1, "查无数据", dataSet);
+                    }
+                }
+                catch (Exception e)
+                {
+                    return ApiResultBuilder<notice>.Return(-2, "数据异常" + e.Message);
+                }
             }
         }
     }
