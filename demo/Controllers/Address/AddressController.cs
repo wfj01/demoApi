@@ -28,7 +28,7 @@ namespace demo.Api.Controllers.Address
                 SqlConnection sqlConnection =
                  new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
                 sqlConnection.Open();
-                string sql = "SELECT * FROM [demo].[dbo].[address] where username='wangfujun'";
+                string sql = "SELECT * FROM [demo].[dbo].[address] where username='"+ username + "'";
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 DataSet dataSet = new DataSet();
                 sqlDataAdapter.Fill(dataSet);
@@ -52,7 +52,7 @@ namespace demo.Api.Controllers.Address
         /// <returns></returns>
         [HttpPost]
         [Route("AddAddress")]
-        public JsonResult AddAddress([FromForm]Addresss addresss)
+        public JsonResult AddAddress([FromBody]Addresss addresss)
         {
             try
             {

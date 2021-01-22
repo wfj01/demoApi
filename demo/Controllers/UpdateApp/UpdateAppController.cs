@@ -21,21 +21,21 @@ namespace demo.Api.Controllers.UpdateApp
         /// <returns></returns>
         [HttpGet]
         [Route("GetUnloadApp")]
-        public JsonResult GetUnloadApp(string appid,string version)
+        public JsonResult GetUnloadApp(string appid,string version,string versionnum)
         {
             try
             {
                 SqlConnection sqlConnection =
                  new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
                 sqlConnection.Open();
-                string sql = "select max(version) from [dbo].updateApp";
+                string sql = "select max(versionnum) from [dbo].updateApp";
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 DataSet dataSet = new DataSet();
                 sqlDataAdapter.Fill(dataSet);
                 if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
                 {
                     string aa =  dataSet.Tables[0].Rows[0][0].ToString();
-                    if (aa != version)
+                    if (Convert.ToInt32(aa) > Convert.ToInt32(versionnum))
                     {
                         string sql2 = "SELECT * FROM [dbo].updateApp WHERE version='" + aa + "';";
                         SqlDataAdapter sqlDataAdapter2 = new SqlDataAdapter(sql2, sqlConnection);

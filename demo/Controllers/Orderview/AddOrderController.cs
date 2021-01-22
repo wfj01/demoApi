@@ -35,8 +35,8 @@ namespace demo.Api.Controllers.Orderview
                 var TimeStamps = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000;
                 foreach (var item in orders)
                 {
-                    string sql = "INSERT INTO [demo].[dbo].[order](shoppingid,name,username,address,phone,dishname,price,sumprice,time,windows,remarks,number,isSubmit,isConfirm,isComplete,isEvaluate,imageSrc,guige1,ladu,updatetime) VALUES" +
-                        "('" + item.Shoppingid + "','" + item.Name + "','" + item.Username + "','" + item.Address + "','" + item.Phone + "','" + item.Dishname + "','" + item.Price + "','" + item.SumPrice + "','" + item.Time + "','" + item.Windows + "','" + item.Remarks + "','" + item.Number + "','" + 0 + "','" + 0 + "','" + 0 + "','" + 0 + "','" + item.ImageSrc + "','" + item.Guige1 + "','" + item.Ladu + "','" + TimeStamps + "') ";
+                    string sql = "INSERT INTO [demo].[dbo].[order](shoppingid,name,username,address,phone,dishname,price,sumprice,time,windows,remarks,number,isSubmit,isComplete,isEvaluate,imageSrc,guige1,ladu,updatetime) VALUES" +
+                        "('" + item.Shoppingid + "','" + item.Name + "','" + item.Username + "','" + item.Address + "','" + item.Phone + "','" + item.Dishname + "','" + item.Price + "','" + item.SumPrice + "','" + item.Time + "','" + item.Windows + "','" + item.Remarks + "','" + item.Number + "','" + 0 + "','" + 0 + "','" + 0 + "','" + item.ImageSrc + "','" + item.Guige1 + "','" + item.Ladu + "','" + TimeStamps + "') ";
                     DataSet dataSet = new DataSet();
                     SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                     sqlDataAdapter.Fill(dataSet);
@@ -52,7 +52,7 @@ namespace demo.Api.Controllers.Orderview
             }
             catch (Exception e)
             {
-                return ApiResultBuilder<Firstroom>.Return(-2, "数据异常" + e.Message);
+                return ApiResultBuilder<FoodList>.Return(-2, "数据异常" + e.Message);
             }
         }
         #endregion
@@ -77,16 +77,16 @@ namespace demo.Api.Controllers.Orderview
                 sqlDataAdapter.Fill(dataSet);
                 if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
                 {
-                    return ApiResultBuilder<List<Firstroom>>.Return(0, "查询成功", dataSet);
+                    return ApiResultBuilder<List<FoodList>>.Return(0, "查询成功", dataSet);
                 }
                 else
                 {
-                    return ApiResultBuilder<List<Firstroom>>.Return(-1, "查无数据", dataSet);
+                    return ApiResultBuilder<List<FoodList>>.Return(-1, "查无数据", dataSet);
                 }
             }
             catch (Exception e)
             {
-                return ApiResultBuilder<Firstroom>.Return(-2, "数据异常" + e.Message);
+                return ApiResultBuilder<FoodList>.Return(-2, "数据异常" + e.Message);
             }
         }
         #endregion

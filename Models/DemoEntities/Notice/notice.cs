@@ -9,7 +9,7 @@ namespace demo.Models.DemoEntities.Notice
         /// <summary>
         /// pid
         /// </summary>
-        public string Pid { get; set; }
+        public string Nid { get; set; }
 
         /// <summary>
         /// title 标题
@@ -30,5 +30,11 @@ namespace demo.Models.DemoEntities.Notice
         /// datatiem 时间
         /// </summary>
         public string Datatime { get; set; }
+
+
+        /// <summary>
+        /// 简介
+        /// </summary>
+        public string Jianjie { get; set; }
     }
 }

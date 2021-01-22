@@ -67,16 +67,16 @@ namespace demo.Api.Controllers.Student
                 sqlDataAdapter.Fill(dataSet);
                 if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
                 {
-                    return ApiResultBuilder<List<Firstroom>>.Return(0, "查询成功", dataSet);
+                    return ApiResultBuilder<List<FoodList>>.Return(0, "查询成功", dataSet);
                 }
                 else
                 {
-                    return ApiResultBuilder<Firstroom>.Return(-1, "查无数据", dataSet);
+                    return ApiResultBuilder<FoodList>.Return(-1, "查无数据", dataSet);
                 }
             }
             catch (Exception e)
             {
-                return ApiResultBuilder<Firstroom>.Return(-2, "数据异常" + e.Message);
+                return ApiResultBuilder<FoodList>.Return(-2, "数据异常" + e.Message);
             }
         }
         /// <summary>
@@ -88,27 +88,57 @@ namespace demo.Api.Controllers.Student
         [Route("QueryOrderList")]
         public JsonResult QueryOrderList(string username)
         {
-            try
-            {
-                SqlConnection sqlConnection =
-                 new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
-                sqlConnection.Open();
-                string sql = "SELECT * FROM [demo].[dbo].[order] where username='" + username+ "'And isSubmit='"+1+"'";
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
-                DataSet dataSet = new DataSet();
-                sqlDataAdapter.Fill(dataSet);
-                if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
+            if (username == null) {
+                username = "";
+                try
                 {
-                    return ApiResultBuilder<List<Firstroom>>.Return(0, "查询成功", dataSet);
+                    SqlConnection sqlConnection =
+                     new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
+                    sqlConnection.Open();
+                    string sql = "SELECT * FROM [demo].[dbo].[order] ";
+                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
+                    DataSet dataSet = new DataSet();
+                    sqlDataAdapter.Fill(dataSet);
+                    if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
+                    {
+                        return ApiResultBuilder<List<FoodList>>.Return(0, "查询成功", dataSet);
+                    }
+                    else
+                    {
+                        return ApiResultBuilder<FoodList>.Return(-1, "查无数据", dataSet);
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    return ApiResultBuilder<Firstroom>.Return(-1, "查无数据", dataSet);
+                    return ApiResultBuilder<FoodList>.Return(-2, "数据异常" + e.Message);
                 }
+
             }
-            catch (Exception e)
+            else
             {
-                return ApiResultBuilder<Firstroom>.Return(-2, "数据异常" + e.Message);
+                try
+                {
+                    SqlConnection sqlConnection =
+                     new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
+                    sqlConnection.Open();
+                    string sql = "SELECT * FROM [demo].[dbo].[order] where username='" + username + "'And isSubmit='" + 1 + "'";
+                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
+                    DataSet dataSet = new DataSet();
+                    sqlDataAdapter.Fill(dataSet);
+                    if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
+                    {
+                        return ApiResultBuilder<List<FoodList>>.Return(0, "查询成功", dataSet);
+                    }
+                    else
+                    {
+                        return ApiResultBuilder<FoodList>.Return(-1, "查无数据", dataSet);
+                    }
+                }
+                catch (Exception e)
+                {
+                    return ApiResultBuilder<FoodList>.Return(-2, "数据异常" + e.Message);
+                }
+
             }
         }
         /// <summary>
@@ -132,16 +162,40 @@ namespace demo.Api.Controllers.Student
                 sqlDataAdapter.Fill(dataSet);
                 if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
                 {
-                    return ApiResultBuilder<List<Firstroom>>.Return(0, "查询成功", dataSet);
+                    return ApiResultBuilder<List<FoodList>>.Return(0, "查询成功", dataSet);
                 }
                 else
                 {
-                    return ApiResultBuilder<Firstroom>.Return(-1, "查无数据", dataSet);
+                    return ApiResultBuilder<FoodList>.Return(-1, "查无数据", dataSet);
                 }
             }
             catch (Exception e)
             {
-                return ApiResultBuilder<Firstroom>.Return(-2, "数据异常" + e.Message);
+                return ApiResultBuilder<FoodList>.Return(-2, "数据异常" + e.Message);
+            }
+        }
+        /// <summary>
+        /// 完成订单
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("PostOrder")]
+        public JsonResult PostOrder(string username, string orderid)
+        {
+            try
+            {
+                SqlConnection sqlConnection =
+                 new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
+                sqlConnection.Open();
+                string sql = "UPDATE [demo].[dbo].[order] set isComplete='" + 1+"' where username='" + username + "'And orderid='" + orderid + "'";
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
+                DataSet dataSet = new DataSet();
+                sqlDataAdapter.Fill(dataSet);
+                return ApiResultBuilder<List<FoodList>>.Return(0, "更新成功", dataSet);
+            }
+            catch (Exception e)
+            {
+                return ApiResultBuilder<FoodList>.Return(-2, "数据异常" + e.Message);
             }
         }
         /// <summary>
@@ -163,16 +217,16 @@ namespace demo.Api.Controllers.Student
                 sqlDataAdapter.Fill(dataSet);
                 if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
                 {
-                    return ApiResultBuilder<List<Firstroom>>.Return(0, "查询成功", dataSet);
+                    return ApiResultBuilder<List<FoodList>>.Return(0, "查询成功", dataSet);
                 }
                 else
                 {
-                    return ApiResultBuilder<Firstroom>.Return(-1, "查无数据", dataSet);
+                    return ApiResultBuilder<FoodList>.Return(-1, "查无数据", dataSet);
                 }
             }
             catch (Exception e)
             {
-                return ApiResultBuilder<Firstroom>.Return(-2, "数据异常" + e.Message);
+                return ApiResultBuilder<FoodList>.Return(-2, "数据异常" + e.Message);
             }
         }
         /// <summary>
@@ -182,10 +236,11 @@ namespace demo.Api.Controllers.Student
         /// <param name="orderid"></param>
         /// <param name="pingjia"></param>
         /// <param name="pingfen"></param>
+        /// <param name="imagelist"></param>
         /// <returns></returns>
         [HttpGet]
         [Route("PostPingjia")]
-        public JsonResult PostPingjia(string username, string orderid,string pingjia,string pingfen)
+        public JsonResult PostPingjia(string username, string orderid,string pingjia,string pingfen,string imagelist)
         {
             try
             {
@@ -193,22 +248,40 @@ namespace demo.Api.Controllers.Student
                  new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
                 sqlConnection.Open();
                 var TimeStamps = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000;
-                string sql = "UPDATE [demo].[dbo].[order] SET pingjia='" + pingjia + "',pingfen='" + pingfen + "',pingjiadate='"+ TimeStamps + "',isEvaluate='" + 1+"'where orderid='" + orderid + "'And username = '"+username+"'";
+                string sql = "UPDATE [demo].[dbo].[order] SET pingjia='" + pingjia + "',pingfen='" + pingfen + "',pingjiadate='"+ TimeStamps + "',isEvaluate='" + 1+ "',pinjiaimage='" + imagelist + "'where orderid='" + orderid + "'And username = '"+username+"'";
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 DataSet dataSet = new DataSet();
                 sqlDataAdapter.Fill(dataSet);
-                if (dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
-                {
-                    return ApiResultBuilder<List<Firstroom>>.Return(0, "查询成功", dataSet);
-                }
-                else
-                {
-                    return ApiResultBuilder<Firstroom>.Return(-1, "查无数据", dataSet);
-                }
+                    return ApiResultBuilder<List<FoodList>>.Return(0, "更新成功", dataSet);
             }
             catch (Exception e)
             {
-                return ApiResultBuilder<Firstroom>.Return(-2, "数据异常" + e.Message);
+                return ApiResultBuilder<FoodList>.Return(-2, "数据异常" + e.Message);
+            }
+        }
+
+        /// <summary>
+        /// 删除订单
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("DeleteOrder")]
+        public JsonResult DeleteOrder(string orderid)
+        {
+            try
+            {
+                SqlConnection sqlConnection =
+                 new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
+                sqlConnection.Open();
+                string sql = "Delete [demo].[dbo].[order] where orderid='" + orderid + "'";
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
+                DataSet dataSet = new DataSet();
+                sqlDataAdapter.Fill(dataSet);
+                return ApiResultBuilder<List<FoodList>>.Return(0, "删除成功", dataSet);
+            }
+            catch (Exception e)
+            {
+                return ApiResultBuilder<FoodList>.Return(-2, "数据异常" + e.Message);
             }
         }
     }

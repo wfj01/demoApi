@@ -57,7 +57,7 @@ namespace demo.Api.Controllers.Student
         /// <returns></returns>
         [HttpPost]
         [Route("postUser")]
-        public JsonResult PostUser([FromBody]Firstroom firstrooms, string studentid)
+        public JsonResult PostUser([FromBody]FoodList firstrooms, string studentid)
         {
             try
             {
@@ -69,11 +69,11 @@ namespace demo.Api.Controllers.Student
                 DataSet dataSet = new DataSet();
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 sqlDataAdapter.Fill(dataSet);
-                return ApiResultBuilder<Firstroom>.Return(0, "保存成功");
+                return ApiResultBuilder<FoodList>.Return(0, "保存成功");
             }
             catch (Exception e)
             {
-                return ApiResultBuilder<Firstroom>.Return(-2, "数据异常" + e.Message);
+                return ApiResultBuilder<FoodList>.Return(-2, "数据异常" + e.Message);
             }
         }
         #endregion

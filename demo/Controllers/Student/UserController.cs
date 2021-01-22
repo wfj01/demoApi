@@ -55,7 +55,7 @@ namespace demo.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("updateUser")]
-        public JsonResult UpdateUser([FromForm]User users)
+        public JsonResult UpdateUser([FromBody]User users)
         {
             try
             {
@@ -64,10 +64,8 @@ namespace demo.Controllers
                   "Server=localhost;User Id=sa;Password=123456789;Database=demo;");
                 sqlConnection.Open();
                 var TimeStamps = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000;
-                string sql = "UPDATE [demo].[dbo].[user](username,name，password,telephone,email,sex,portrait,birtherdate,updatetime) " +
-                    "VALUES('" + users.Username + "','" + users.Name + "'," +
-                    "'" + users.Password + "','" + users.Telephone + "','" + users.Email + "'," + users.Sex + ",'" + users.Portrait + "'," +
-                    "'" + users.Birtherdate + "','" + TimeStamps + "') where username= '"+users.Username+"'";
+                string sql = "UPDATE [demo].[dbo].[user] SET username='" + users.Username + "',name='" + users.Name + "',password='" + users.Password + "',telephone='" + users.Telephone + "'" +
+                    ",email='" + users.Email + "',sex='" + users.Sex + "',portrait='" + users.Portrait + "',birtherdate='" + users.Birtherdate + "',updatetime='" + TimeStamps + "'where username='" + users.Username + "'";
                 DataSet dataSet = new DataSet();
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
                 sqlDataAdapter.Fill(dataSet);

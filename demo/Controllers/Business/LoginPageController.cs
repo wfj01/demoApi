@@ -18,26 +18,25 @@ namespace demo.Api.Controllers.Business
         /// <summary>
         /// 登录接口
         /// </summary>
-        /// <param name="businessLogin"></param>
         /// <returns></returns>
         [HttpGet]
         [Route("getUser")]
-        public JsonResult Login([FromQuery]BusinessLogin businessLogin)
+        public JsonResult Login(string Name,string Password,string License)
         {
             try
             {
                 SqlConnection sqlConnection =
                      new SqlConnection("Server=localhost;User Id=sa;Password=123456789;Database=demo;");//连接数据库
                 sqlConnection.Open();
-                string sql1 = "SELECT * FROM [demo].[dbo].[businessMessage] where name='" + businessLogin.Name + "'";
+                string sql1 = "SELECT * FROM [demo].[dbo].[businessMessage] where name='" + Name + "'";
                 SqlDataAdapter sqlDataAdapter1 = new SqlDataAdapter(sql1, sqlConnection);
                 DataSet dataSet1 = new DataSet();
                 sqlDataAdapter1.Fill(dataSet1);
-                string sql2 = "SELECT * FROM [demo].[dbo].[businessMessage] where password='" + businessLogin.Password + "'";
+                string sql2 = "SELECT * FROM [demo].[dbo].[businessMessage] where password='" + Password + "'";
                 SqlDataAdapter sqlDataAdapter2 = new SqlDataAdapter(sql2, sqlConnection);
                 DataSet dataSet2 = new DataSet();
                 sqlDataAdapter2.Fill(dataSet2);
-                string sql3= "SELECT name FROM [demo].[dbo].[businessMessage] Where license='" + businessLogin.License+"'";
+                string sql3= "SELECT name FROM [demo].[dbo].[businessMessage] Where license='" + License+"'";
                 SqlDataAdapter sqlDataAdapter3 = new SqlDataAdapter(sql3, sqlConnection);
                 DataSet dataSet3= new DataSet();
                 sqlDataAdapter3.Fill(dataSet3);

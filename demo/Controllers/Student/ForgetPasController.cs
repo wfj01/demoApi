@@ -57,11 +57,11 @@ namespace demo.Api.Controllers
                 {
                     if ((dataSet1 != null && dataSet1.Tables.Count > 0 && dataSet1.Tables[0].Rows.Count > 0) == false)
                     {
-                        return ApiResultBuilder<Firstroom>.Return(-1, "账号错误");
+                        return ApiResultBuilder<FoodList>.Return(-1, "账号错误");
                     }
                     else
                     {
-                        return ApiResultBuilder<Firstroom>.Return(-1, "用户姓名错误");
+                        return ApiResultBuilder<FoodList>.Return(-1, "用户姓名错误");
                     }
                 }
                 
